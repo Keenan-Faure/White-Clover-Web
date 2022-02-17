@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<head>
+	<link rel="icon" href="Logo/wtcl.ico" type="image/ico">
+	<style>
+		/***Splash Screen***/
+		.splash
+		{
+			position: fixed; /* so that the user cant scroll, or pass by the screen */
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%; /* 100% */
+			background: black;
+			z-index: 200; /* infront of everything else */
+			color: white;
+			font-family: 'Times New Roman', serif;
+			text-align: center;
+			line-height: 90vh;
+		}
+		.splash.display-none
+		{
+			position: fixed; /* so that the user cant scroll, or pass by the screen */
+			top: 0;
+			left: 0;
+			opacity: 0;
+			width: 100%;
+			height: 100%; /* 100% */
+			background: black;
+			z-index: -10; /* behind everything else */
+			transition: all 0.5s;
+		}
+		@keyframes fadeIn
+		{
+			to
+			{
+				opacity: 1;
+			}
+		}
+		.fade-in 
+		{
+			opacity: 0;
+			animation: fadeIn 1s ease-in forwards; /* forwards retains the final keyframe, sets the text to an opacity of 1 */
+		}	
+		body
+		{
+			margin: 0;
+			width: 100%;
+			height: 100%;
+		}
+		.backgroundImage
+		{
+			position: absolute;
+			background-image: url("Images/achievements.png");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-color: #ffffff;	
+			height: 977px;
+			width: 1880px;
+		}
+		.teraIcon
+		{
+			background-position: center;
+			position: relative;
+			height: 50px;
+			width: 50px;
+			background-image: url("Images/icon.ico");
+			background-repeat: no-repeat;
+			background-size: cover;
+			display: block;
+		}
+		/* Top iconBar */
+		.sideBarContainer
+		{
+			position: relative;
+			background-image: url("Images/23.jpg");
+			background-color: black;
+			background-position: center;
+			height: 60px;
+			background-size: cover;
+			top: 0%;
+		}
+		.sideBarContainer:hover
+		{	
+		
+		}
+		/* Sidebar text */
+		/* change font sizes depending on the type of message displayed, dont keep them the same size */
+        .sideBarTextLogo 
+		{
+            font-size: 15px;
+            font-family: 'Times New Roman', serif;
+            color: #000000;
+            left: 54%;
+			top: 11px;
+            position: absolute;
+        }
+        .sideBarTextLogo:hover 
+		{
+            color: #cacadc;
+        }
+        .sideBarTextLevel
+		{
+            font-size: 15px;
+            font-family: 'Times New Roman', serif;
+            color: #000000;
+            top: 8px;
+			left: 35%;
+			position: absolute;
+        }
+        .sideBarTextLevel:hover
+        {
+			color: #cacadc;
+        }
+        .sideBarTextSize 
+        {
+            font-size: 8px;
+            font-family: 'Times New Roman', serif;
+            color: #000000;
+            top: 11px;
+            left: 40%;
+            position: absolute;
+        }
+		.sideBarTextSize:hover
+		{
+			color: #cacadc;
+		}
+        .sideBarTextMembers 
+		{
+            font-size: 15px;
+            font-family: 'Times New Roman', serif;
+            color: #000000;
+			top: 0px;
+			left: 20%;
+			position: absolute;
+        }
+		.sideBarTextMembers:hover
+		{
+			color: #cacadc;
+		}
+        .sideBarTextGM 
+		{
+            font-size: 15px;
+            font-family: 'Times New Roman', serif;
+			top: -5px;
+			left: 70%;
+            color: #000000;
+			position: absolute;
+        }
+		.sideBarTextGM:hover
+		{
+			color: #cacadc;
+		}
+
+		/* Sidebar guilds logo */
+        .sideBarGuildLogo 
+		{
+            background-image: url("Images/WhiteClover.bmp");
+            background-position: center;
+            position: relative;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 55px;
+			border: 2px solid #9eb7c1;
+            width: 55px;
+            left: 50%;
+			top: -48px;
+			cursor: pointer;
+			transition-duration: 0.75s;
+        }
+		.sideBarContainer:hover
+		{
+			background-image: url("Images/sidebarImage.png");
+			width: 1880px;
+			height: 60px;
+			transition-duration: 0.4s;
+		}
+		.sideBarGuildLogo:hover
+		{
+			background-image: url("Images/WhiteClover2.bmp");
+		}
+		.loginButtonContainer
+		{
+			position: absolute;
+			height: 40px;
+			width: 200px;
+			top: 10px;
+			right: 2%;
+			padding: 20px;
+		}
+		.loginButton
+		{
+			position: absolute;
+			border-radius: 5px;
+			top: 0%;
+			left: 0%;
+			width: 180px;
+			height: 30px;
+			padding: 7px 16px;
+			font-size: 15px;
+			background-image: url("btnpics/first.jpg");
+			cursor: pointer;
+			text-align: center;
+			transition-duration: 0.15s;
+		}
+		.loginButton:hover
+		{
+			background-image: url("backgroundImage21.png");
+			border: 2px solid #5b5be5;
+			cursor: pointer;
+			text-align: center;
+		}
+		*
+		{
+			box-sizing: border-box;
+		}
+		/*** Achievement Container ***/
+		.achiContainer
+		{
+			position: absolute;
+			background-color: rgba(0,0,0,0.7);
+			height: 800px;
+			width: 1350px;
+			left: 25%;
+			top: 15%;
+		}
+		.achiContainerClicked
+		{
+			display: none;
+			width: 100%;
+			height: 93.9%;
+			margin: 0;
+		}
+		.backgroundB
+		{
+			width: 100%;
+			height: 93.9%; /*max height and width */
+			background-color: rgba(0,0,0,0.7); /* Black with a 0.4 opacity */
+			margin: 0;
+			position: absolute;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		/*Zoom Animation*/
+		@webkit-keyframes animatezoom
+		{
+			from {-webkit-transform: scale(0)}
+			to {-webkit-transform: scale(1)}
+		}
+		@keyframes animatezoom
+		{
+			from {transform: scale(0)}
+			to {transform: scale(1)}
+		}
+		.animation
+		{
+			-webkit-animation: animatezoom 0.6s;
+			animation: animatezoom 0.6s;
+		}
+		/*The Close Button*/
+		.closeButton
+		{
+			position: absolute;
+			right: 20px;
+			top: 0;
+			z-index: 1;
+			color: #ff0000;
+			font-size: 30px;
+			cursor: pointer;
+		}
+		.closeButton:hover, .closeButton:focus
+		{
+			color: #ff0000;
+			cursor: pointer;
+		}
+			
+		/* Achievements */
+		.achiLevel
+		{
+			position: absolute;
+			width: 90%;
+			left: 5%;
+			top: 5%;
+			height: 30%;			
+		}
+		.achiWorld
+		{
+			position: absolute;
+			width: 90%;
+			left: 5%;
+			top: 36%;
+			height: 30%;		
+		}
+		.achiDungeon
+		{
+			position: absolute;
+			width: 90%;
+			left: 5%;
+			top: 67%;
+			height: 30%;	
+		}
+		/* Button */
+		.moreImages
+		{
+			position: absolute;
+			height: 35px;
+			width: 90px;
+			font-size: 10px;
+			font-family: Arial, sans-serif, Helvetica;
+			background-color: #eb6060;
+			padding: 5px 10px;
+			cursor: pointer;
+			text-align: center;
+			transition-duration: 3s;
+			left: 1125px;
+			top: 100px;
+		}
+		.moreImages:hover
+		{
+			opacity: 0.8;
+			width: 110px;
+			height: 40px;
+			background-color: #ff0000;
+		}
+		/* id to make images smaller to fit into the respective containers */	
+		#images
+		{
+			position: absolute;
+			padding: 5px 15px;
+			height: 230px;
+			width: 350px;
+			border-radius: 8%;
+			cursor: pointer;
+			
+		}
+		.imagesFull
+		{
+			position: absolute;
+			padding: 5px 15px;
+			height: 260px;
+			width: 400px;	
+			border-radius: 8%;
+		}
+		.imagesFull:hover
+		{
+			opacity: 0.6;
+			cursor: pointer;
+		}
+		.ImagesFullScreen
+		{
+			display: none; /* hidden by default */
+			position: fixed; /* Stay in Place */
+			z-index: 1; /* Sit on top */
+			left: 0;
+			top: 0;
+			width: 100%; /* Full width */
+			height: 100%; /* Full height */
+			overflow: auto; /* Enable scroll if needed */
+			background-color: rgb(0,0,0); /* Fallback color */
+			background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+			padding-top: 60px;
+			
+			animation-name: zoomer;
+			animation-duration: 0.6s;
+		}
+		
+		/*add animation*/
+		@keyframes zoomer
+		{
+			from {transform: scale(0.1)}
+			to {transform: scale(1)}
+		}
+		#resize
+		{
+			width: 1280px;
+			height: 720px;
+			position: absolute;
+			top: 150px;
+			left: 300px;
+		}
+	</style>
+</head>
+<body>
+	<div class = "splash">
+		<h1 class = "fade-in">White Clover Achievements</h1>
+	</div>
+	<div class = "backgroundImage">
+		<div class = "sideBarContainer">
+			<a class = "teraIcon" href="https://gameforge.com/en-US/play/tera" title="tera Icon" id="Icon"></a>
+			<div class = "sideBarGuildLogo">
+				
+			</div>
+			<h1 class = "sideBarTextLogo">White Clover</h1>
+			<h2 class = "sideBarTextLevel">Guild Lv.252</h2>
+			<h3 class = "sideBarTextMembers">Members:<br /> 88 / 100</h3>
+			<h4 class = "sideBarTextGM">Guild Master:<br>Keenan.F</h4>
+		</div>
+		
+		<div class = "achiContainer" id = "clicked2" onclick = "document.getElementById('clicked1').style.display = 'block';document.getElementById('clicked2').style.display = 'none';">
+		<spam class = "closeButton" onclick = "document.getElementById('clicked2').style.display = 'none'" title="Close" id="latom">&times;</spam>
+			<div class = "achiLevel">
+				<img src = "Images/Achievements/Level/1.png" id = "images"></img>
+				<img src = "Images/Achievements/Level/2.png" id = "images" style = "left: 380px;"></img>
+				<img src = "Images/Achievements/Level/3.png" id = "images" style = "left: 760px;"></img>
+			</div>
+			<div class = "achiWorld">
+				<img src = "Images/Achievements/World/1.png" id = "images"></img>
+				<img src = "Images/Achievements/World/2.png" id = "images" style = "left: 380px;"></img>
+				<img src = "Images/Achievements/World/3.png" id = "images" style = "left: 760px;"></img>
+			</div>
+			<div class = "achiDungeon">
+				<img src = "Images/Achievements/Dungeons/1.png" id = "images"></img>
+				<img src = "Images/Achievements/Dungeons/2.png" id = "images" style = "left: 380px;"></img>
+				<img src = "Images/Achievements/Dungeons/3.png" id = "images" style = "left: 760px;"></img>
+			</div>
+		</div>
+		<div class = "achiContainerClicked" id = "clicked1">
+			<div class = "backgroundB">
+				<spam class = "closeButton" onclick="document.getElementById('clicked1').style.display='none';document.getElementById('clicked2').style.display='block'" title="Close">&times;</spam>
+				<div class = "achiLevel">
+					<img src = "Images/Achievements/Level/1.png" class = "imagesFull" onclick="onclicks('clicked3')"></img>
+					<img src = "Images/Achievements/Level/2.png" class = "imagesFull" style = "left: 420px;" onclick="onclicks('clicked31')"></img>
+					<img src = "Images/Achievements/Level/3.png" class = "imagesFull" style = "left: 840px;" onclick="onclicks('clicked32')"></img>
+					<img src = "Images/Achievements/Level/4.png" class = "imagesFull" style = "left: 1270px;" onclick="onclicks('clicked33')"></img>
+				</div>
+				<div class = "achiWorld">
+					<img src = "Images/Achievements/World/1.png" class = "imagesFull" id = '5' onclick="onclicks('clicked34')"></img>
+					<img src = "Images/Achievements/World/2.png" class = "imagesFull" style = "left: 420px;" onclick="onclicks('clicked35')"></img>
+					<img src = "Images/Achievements/World/3.png" class = "imagesFull" style = "left: 840px;" onclick="onclicks('clicked36')"></img>
+					<img src = "Images/Achievements/World/4.png" class = "imagesFull" style = "left: 1270px;" onclick="onclicks('clicked37')"></img>
+				</div>
+				<div class = "achiDungeon">
+					<img src = "Images/Achievements/Dungeons/1.png" class = "imagesFull" id = '8' onclick="onclicks('clicked38')"></img>
+					<img src = "Images/Achievements/Dungeons/2.png" class = "imagesFull" style = "left: 420px;" onclick="onclicks('clicked39')"></img>
+					<img src = "Images/Achievements/Dungeons/3.png" class = "imagesFull" style = "left: 840px;" onclick="onclicks('clicked310')"></img>
+					<img src = "Images/Achievements/Dungeons/4.png" class = "imagesFull" style = "left: 1270px;" onclick="onclicks('clicked311')"></img>
+				</div>
+			</div>
+		</div>
+		<div class = "ImagesFullScreen" id="clicked3" onclick="onclicks">
+			<span class="closeButton" id="closeBtn" onclick = "closeButtonOnclick('clicked3')" title="Close">&times;</span>
+			<img src = "Images/Achievements/Level/1.png" id = "resize" title="Guild Lv."></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked31">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked31')" title="Close">&times;</span>
+			<img src = "Images/Achievements/Level/2.png" id = "resize" title="Guild Lv."></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked32">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked32')" title="Close">&times;</span>
+			<img src = "Images/Achievements/Level/3.png" id = "resize" title="Guild Lv."></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked33">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked33')" title="Close">&times;</span>
+			<img src = "Images/Achievements/Level/4.png" id = "resize" title="Guild Lv."></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked34">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked34')" title="Close">&times;</span>
+			<img src = "Images/Achievements/World/1.png" id = "resize" title="Guild World"></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked35">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked35')" title="Close">&times;</span>
+			<img src = "Images/Achievements/World/2.png" id = "resize" title="Guild World"></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked36">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked36')" title="Close">&times;</span>
+			<img src = "Images/Achievements/World/3.png" id = "resize" title="Guild World"></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked37">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked37')" title="Close">&times;</span>
+			<img src = "Images/Achievements/World/4.png" id = "resize" title="Guild World"></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked38">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked38')" title="Close">&times;</span>
+			<img src = "Images/Achievements/Dungeons/1.png" id = "resize" title="Guild Dungeons"></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked39">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked39')" title="Close">&times;</span>
+			<img src = "Images/Achievements/Dungeons/2.png" id = "resize" title="Guild Dungeons"></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked310">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked310')" title="Close">&times;</span>
+			<img src = "Images/Achievements/Dungeons/3.png" id = "resize" title="Guild Dungeons"></img>
+		</div>
+		
+		<div class = "ImagesFullScreen" id="clicked311">
+			<span class="closeButton" onclick = "closeButtonOnclick('clicked311')" title="Close">&times;</span>
+			<img src = "Images/Achievements/Dungeons/4.png" id = "resize" title="Guild Dungeons"></img>
+		</div>
+		
+		<script src = "Examples.js"></script>
+		<script src = "splashScreen.js"></script>
+		<script src = "returnHome2.js"></script>
+		
+		<script>
+			function onclicks(id)
+			{
+
+				document.getElementById("clicked1").style.display = 'none'; //container that must be closed
+				document.getElementById(id).style.display = 'block'; //container that must be opened
+			}
+			function closeButtonOnclick(id)
+			{
+				document.getElementById(id).style.display = 'none';
+				document.getElementById("clicked1").style.display = 'block';
+			}
+		</script>
+	</div>
+</body>
+

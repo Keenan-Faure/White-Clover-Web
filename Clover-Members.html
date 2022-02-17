@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="icon" href="Logo/wtcl.ico" type="image/ico">
+	<meta name = "viewport" content = "width = device-width, initial-scale = 1">
+	<style>
+		/***Splash Screen***/
+		.splash
+		{
+			position: fixed; /* so that the user cant scroll, or pass by the screen */
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%; /* 100% */
+			color: white;
+			font-family: 'Times New Roman', serif;
+			text-align: center;
+			line-height: 90vh;
+			background: black;
+			z-index: 200; /* infront of everything else */
+		}
+		.splash.display-none
+		{
+			position: fixed; /* so that the user cant scroll, or pass by the screen */
+			top: 0;
+			left: 0;
+			opacity: 0;
+			width: 100%;
+			height: 100%; /* 100% */
+			background: black;
+			z-index: -10; /* behind everything else */
+			transition: all 0.5s;
+		}
+		@keyframes fadeIn
+		{
+			to
+			{
+				opacity: 1;
+			}
+		}
+		.fade-in 
+		{
+			opacity: 0;
+			animation: fadeIn 1s ease-in forwards; /* forwards retains the final keyframe, sets the text to an opacity of 1 */
+		}
+		body
+		{
+			margin: 0;
+			font-family: Arial, Helvetica, sans-serif;
+			width: 100%;
+			height: 100%;
+		}
+		/* backgroundSlideShow */
+		.slideShowContainer
+		{
+			position: relative;
+			background-color: black;
+			height: 100%;
+			display: block;
+			width: 100%;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;	
+		}
+		*
+		{
+			box-sizing: border-box;	
+		}
+		.mySlides
+		{
+			display: none;
+		}
+		img
+		{
+			vertical-align: middle;
+		}		
+		/* Caption text */
+		.active
+		{
+			background-color: #717171;
+		}
+		/* Fading animation */
+		.fade
+		{
+			-webkit-animation-name: fade;
+			-webkit-animation-duration: 0.5s;
+			animation-name: fade;
+			animation-duration: 0.5s;
+		}
+		@-webkit-keyframes fade
+		{
+			from {opacity: .4}
+			to {opacity: 1}
+		}
+		@keyframes fade
+		{
+			from {opacity: .4}
+			to {opacity: 1}
+		}
+		/*TeraIcon*/
+		.teraIcon
+		{
+			background-position: center;
+			position: relative;
+			height: 50px;
+			width: 50px;
+			background-image: url("Images/icon.ico");
+			background-repeat: no-repeat;
+			background-size: cover;
+			display: block;
+		}
+		/*** Top iconBar ***/
+		.sideBarContainer
+		{
+			position: relative;
+			background-image: url("Images/23.jpg");
+			background-color: black;
+			background-position: center;
+			height: 60px;
+			width: 1880px;
+			background-size: cover;
+			top: 0%;
+		}
+		.sideBarContainer:hover
+		{
+			background-image: url("Images/sidebarImage.png");
+			width: 1880px;
+			height: 60px;
+			transition-duration: 0.4s;
+		}
+		/* Sidebar text */
+		/* change font sizes depending on the type of message displayed, dont keep them the same size */
+        .sideBarTextLogo 
+		{
+            font-size: 15px;
+            font-family: 'Times New Roman', serif;
+            color: #000000;
+            left: 54%;
+			top: 11px;
+			background-position: center;
+            position: absolute;
+        }
+        .sideBarTextLogo:hover 
+		{
+            color: #cacadc;
+        }
+        .sideBarTextLevel
+		{
+            font-size: 15px;
+            font-family: 'Times New Roman', serif;
+            color: #000000;
+            top: 8px;
+			left: 35%;
+			position: absolute;
+        }
+        .sideBarTextLevel:hover
+        {
+			color: #cacadc;
+        }
+        .sideBarTextSize 
+        {
+            font-size: 8px;
+            font-family: 'Times New Roman', serif;
+            color: #000000;
+            top: 11px;
+			width: 100%;
+            left: 40%;
+            position: absolute;
+        }
+		.sideBarTextSize:hover
+		{
+			color: #cacadc;
+		}
+        .sideBarTextMembers 
+		{
+            font-size: 15px;
+            font-family: 'Times New Roman', serif;
+            color: #000000;
+			top: 0px;
+			left: 20%;
+			position: absolute;
+        }
+		.sideBarTextMembers:hover
+		{
+			color: #cacadc;;
+		}
+        .sideBarTextGM 
+		{
+            font-size: 15px;
+            font-family: 'Times New Roman', serif;
+			top: -5px;
+			left: 70%;
+            color: #000000;
+			position: absolute;
+        }
+		.sideBarTextGM:hover
+		{
+			color: #cacadc;
+		}
+		/* Sidebar guilds logo */
+        .sideBarGuildLogo 
+		{
+            background-image: url("Images/WhiteClover.bmp");
+            background-position: center;
+            position: relative;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 55px;
+            width: 55px;
+            border: 2px solid #9eb7c1;
+            left: 50%;
+			top: -50px;
+			cursor: pointer;
+			border: 2px solid #9eb7c1;
+			transition-duration: 0.75s;
+        }
+		.sideBarGuildLogo:hover
+		{
+			background-image: url("Images/WhiteClover2.bmp");
+		}
+		.loginButtonContainer
+		{
+			position: absolute;
+			height: 40px;
+			width: 200px;
+			top: 10px;
+			right: 2%;
+			padding: 20px;
+		}
+		.loginButton
+		{
+			position: absolute;
+			border-radius: 5px;
+			top: 0%;
+			left: 0%;
+			width: 180px;
+			height: 30px;
+			padding: 7px 16px;
+			font-size: 15px;
+			background-image: url("btnpics/first.jpg");
+			cursor: pointer;
+			text-align: center;
+			transition-duration: 0.15s;
+		}
+		.loginButton:hover
+		{
+			background-image: url("backgroundImage21.png");
+			border: 2px solid #5b5be5;
+			cursor: pointer;
+			text-align: center;
+		}
+		*
+		{
+			box-sizing: border-box;
+		}
+		/***Guild Member List ***/
+		/*Container*/
+		.memberContainer
+		{
+			position: absolute;
+			left: 20%;
+			top: 10%;
+			height: 850px;
+			opacity: 0.7;
+			width: 1000px;
+			border: 1px solid #ffffff;
+			background-position: center;
+			background-size: cover;
+			background-color: black;
+		}
+		.nameContainer
+		{
+			width: 30%;
+			height: 100%;
+			left: 0%;
+			margin: 0px;
+			position: absolute;
+		}
+		.nameContainer:hover
+		{
+
+		}
+		.classContainer
+		{
+			width: 40%;
+			height: 100%;
+			left: 30%;
+			margin: 0px;
+			position: absolute;
+		}
+		.classContainer:hover
+		{
+
+		}
+		.contriContainer
+		{
+			width: 30%;
+			height: 100%;
+			left: 70%;	
+			margin: 0px;
+			position: absolute;
+		}
+		.contriContainer:hover
+		{
+
+		}
+		.textHeader
+		{
+			font-size: 20px;
+			margin: 10px;
+			color: #ffffff;
+			font-family: 'Times New Roman', serif;
+			padding: 20px 90px;
+			text-align: center;
+			
+		}
+		.textBody
+		{
+			font-size: 18px;
+			margin: 10px;
+			font-family: 'Times New Roman', serif;
+			padding: 10px 10px;
+			text-align: center;
+			color: #ffffff;
+		}
+		.textBody:hover
+		{
+			color: #1e1ed1;
+		}
+
+		/*The Container*/
+		.popUpContainer
+		{
+			position: absolute;
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			width: 1880px;
+			height: 977px;
+			/* constant position from the left */
+			display: none; /* It should only be displayed when using the script */
+		}
+		/* Zoom animation */
+		@webkit-keyframes animatezoom
+		{
+			from {-webkit-transform: scale(0)}
+			to {-webkit-transform: scale(1)}
+		}
+		@keyframes animatezoom
+		{
+			from {transform: scale(0)}
+			to {transform: scale(1)}
+		}
+		.animation
+		{
+			-webkit-animation: animatezoom 0.6s;
+			animation: animatezoom 0.6s;
+		}
+		.popUpBackgroundContainer
+		{
+			width: 1880px;
+			height: 1003px; /*max height and width */
+			border: none;
+			background-color: rgba(0,0,0,1); /* Black with a 0.4 opacity */
+			position: absolute;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+		/* This container will contain the close button and the title of the person */
+		.headPop
+		{
+			position: absolute;
+			height: 50px;
+			width: 1880px;
+			top: 0;
+			left: 0;
+		}
+		/* This will contain the image of the person */
+		.bodyPop
+		{
+			position: absolute;
+			height: 750px;
+			width: 1880px;
+			top: 50px; 
+		}
+		/* This container will have the extra infomation about the person */
+		.lastPop
+		{
+			position: absolute;
+			height: 50px;
+			width: 1880px;
+			top: 870px;
+		}
+		/*The Close Button*/
+		.closeButton
+		{
+			position: absolute;
+			right: 20px;
+			top: 0;
+			color: #ff0000;
+			font-size: 30px;
+			cursor: pointer;
+		}
+		.closeButton:hover, .closeButton:focus
+		{
+			color: #ff0000;
+			cursor: pointer;
+		}
+		.textPopUpBody
+		{
+			font-size: 20px;
+			font-family: 'Times New Roman', serif;
+			color: #e1e1f3;
+		}
+		.textPopUpHeader
+		{
+			font-size: 30px;
+			font-family: 'Times new Roman', serif;
+			color: #e1e1f3;
+		}
+		#centers
+		{
+			position: absolute;
+			left: 40%;
+		}
+	</style>
+</head>
+<body>
+	<div class = "splash">
+		<h1 class = "fade-in">White Clover Member List</h1>
+	</div>
+	<div class = "slideShowContainer" id = "ssc">
+		<div class = "sideBarContainer">
+			<a class = "teraIcon" href = "https://gameforge.com/en-US/play/tera" title = "tera Icon" id = "teraIcon"></a>
+			<div class = "sideBarGuildLogo">
+			</div>
+			<h1 class = "sideBarTextLogo">White Clover</h1>
+			<h2 class = "sideBarTextLevel">Guild Lv.235</h2>
+			<h3 class = "sideBarTextMembers">Members:<br /> 86 / 100</h3>
+			<h4 class = "sideBarTextGM">Guild Master:<br>Keenan.F</h4>
+		</div>
+		
+		<div class = "memberContainer">
+			<div class = "nameContainer">
+				<h1 class = "textHeader">
+					<b>Name</b>
+				</h1>
+				<br>
+				<p class = "textBody">
+					<img src = "ClassImages/warrior.png" style = "width: 21px;height: 21px;">
+					Keenan.F
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					<img src = "ClassImages/warrior.png" style  = "width: 21px; height: 21px;">
+					raveblade
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					<img src = "ClassImages/sorc.png" style = "width: 21px;height: 21px;">
+					Doraemond
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					<img src = "ClassImages/brawler.png" style = "width: 21px; height: 21px;">
+					Gp.Only
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					<img src = "ClassImages/warrior.png" style = "width: 21px; height: 21px;">
+					Kyle.faure
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					<img src = "ClassImages/warrior.png" style = "width: 21px; height: 21px;">
+					Tensusorax
+				</p>
+			</div>
+			<div class = "classContainer">
+				<h3 class = "textHeader">
+					<b>Class</b>
+				</h3>
+				<br>
+				<p class = "textBody">
+					[High Elf Male] Warrior
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					[Human Male] Warrior
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					[Popori] Sorcerer
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					[Popori] Brawler
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					[High Elf Male] Warrior
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					[Castanic Female] Warrior
+				</p>
+			</div>
+			<div class = "contriContainer">
+				<h5 class = "textHeader">
+					<b>Contribution</b>
+				</h5>
+				<br>
+				<p class = "textBody">
+					93608(+1000)
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					89420(+1000)
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					24000(+1000)
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					0(+0)
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					94674(+1000)
+				</p>
+				<br>
+				<br>
+				<p class = "textBody">
+					18896(+0)
+				</p>
+			</div>
+		</div>
+
+		<!--
+		<div class = "popUpContainer animation" id = "popup">
+			<div class = "popUpBackgroundContainer">
+				<div class = "headPop">
+					<span onclick = "document.getElementById('popup').style.display = 'none'" class = "closeButton" title = "Close">
+						&times;
+					</span>
+					<img src = "ClassImages/warrior.png" style = "height: 40px;width: 40px;position: absolute;left: 37%;top: 8px;">
+					<h1 class = "textPopUpHeader" style = "top: -10px;" id = "centers">Lv.70 Keenan.F</h1>
+				</div>
+				<div class = "bodyPop">
+					<img src = "Images/keenanF.png" style = "height:800px; border: 1px solid #e38c4f;position: absolute;left: 10%;top: 30px;">
+				</div>
+				<div class = "lastPop">
+					<h2 class = "textPopUpHeader" id = "centers">Classified Information</h2>
+					<br><br><br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 35%;">-> Keenan.F is the Guild Master of White Clover</p>
+					<br><br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 35%;">-> Keenan.F is one of <a href = 'Images/raveblade2.png'> 'Dat Three Warriors'.</a></p>
+				</div>
+			</div>			
+		</div>
+		<div class = "popUpContainer animation" id = "popup1">
+			<div class = "popUpBackgroundContainer">
+				<div class = "headPop">
+					<span onclick = "document.getElementById('popup1').style.display = 'none'" class = "closeButton" title = "Close">
+						&times;
+					</span>
+					<img src = "ClassImages/warrior.png" style = "height: 40px;width: 40px;position: absolute;left: 37%;top: 8px;">
+					<h1 class = "textPopUpHeader" style = "top: -10px;" id = "centers">Lv.70 raveblade</h1>
+				</div>
+				<div class = "bodyPop">
+					<img src = "Images/raveblade2.png" style = "height: 800px; border: 1px solid #4444e2; position: absolute; left: 10%; top: 30px;">
+				</div>
+				<div class = "lastPop">
+					<h2 class = "textPopUpHeader" id = "centers">Classified Information</h2>
+					<br><br><br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 25%;">-> raveblade is the next Guild Master of White Clover, and has the third most contribution in the guild<p>
+					<br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 35%;">-> raveblade is also part of <a href = 'Images/raveblade2.png'> 'Dat Three Warriors'.</a></p>
+				</div>
+			</div>
+		</div>
+		
+		<div class = "popUpContainer animation" id = "popup2">
+			<div class = "popUpBackgroundContainer">
+				<div class = "headPop">
+					<span onclick = "document.getElementById('popup2').style.display = 'none'" class = "closeButton" title = "Close">
+						&times;
+					</span>
+					<img src = "ClassImages/sorc.png" style = "height: 40px;width: 40px;position: absolute;left: 37%;top: 8px;">
+					<h1 class = "textPopUpHeader" style = "top: -10px;" id = "centers">Lv.70 Doraemond</h1>
+				</div>
+				<div class = "bodyPop">
+					<img src = "Images/doraemond.png" style = "height: 800px; border: 1px solid #bede1c; position: absolute; left: 10%; top: 30px;">
+				</div>
+				<div class = "lastPop">
+					<h2 class = "textPopUpHeader" id = "centers">Classified Information</h2>
+					<br><br><br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 30%;">-> Doraemond is a 'meow', basically she loves fish. Cutest Popori in-game at the moment<p>
+					<br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 35%;">-> She has bad ping but that doesnt stop her from playing tera 😅</p>
+				</div>
+			</div>
+		</div>
+
+		<div class = "popUpContainer animation" id = "popup3">
+			<div class = "popUpBackgroundContainer">
+				<div class = "headPop">
+					<span onclick = "document.getElementById('popup3').style.display = 'none'" class = "closeButton" title = "Close">
+						&times;
+					</span>
+					<img src = "ClassImages/brawler.png" style = "height: 40px;width: 40px;position: absolute;left: 37%;top: 8px;">
+					<h1 class = "textPopUpHeader" style = "top: -10px;" id = "centers">Lv.70 Gp.Only</h1>
+				</div>
+				<div class = "bodyPop">
+					<img src = "Images/gponly.png" style = "height: 800px; border: 1px solid #3c3c37; position: absolute; left: 10%; top: 30px;">
+				</div>
+				<div class = "lastPop">
+					<h2 class = "textPopUpHeader" id = "centers">Classified Information</h2>
+					<br><br><br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 30%;">-> Gp.only is a pvx player in White Clover, meaning he can do both pvp and pve perfectly.<p>
+					<br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 32%;">-> However, he is currently retired and is hanging out with some guild in CU 🤦‍♂️</p>
+				</div>
+			</div>
+		</div>
+
+		<div class = "popUpContainer animation" id = "popup4">
+			<div class = "popUpBackgroundContainer">
+				<div class = "headPop">
+					<span onclick = "document.getElementById('popup4').style.display = 'none'" class = "closeButton" title = "Close">
+						&times;
+					</span>
+					<img src = "ClassImages/warrior.png" style = "height: 40px;width: 40px;position: absolute;left: 37%;top: 8px;">
+					<h1 class = "textPopUpHeader" style = "top: -10px;" id = "centers">Lv.70 Kyle.faure</h1>
+				</div>
+				<div class = "bodyPop">
+					<img src = "Images/kylefaure.png" style = "height: 800px; border: 1px solid #3c3c37; position: absolute; left: 10%; top: 30px;">
+				</div>
+				<div class = "lastPop">
+					<h2 class = "textPopUpHeader" id = "centers">Classified Information</h2>
+					<br><br><br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 28%;">-> Kyle.faure has the most contribution in White Clover, and is also part of <a href = Images/raveblade2.png> 'Dat Three Warriors'.</a></p>
+					<br><br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 30%;">-> Kyle.faure will never become Guild Master because he will destroy everything.👀</p>
+				</div>
+			</div>
+		</div>
+
+		<div class = "popUpContainer animation" id = "popup5">
+			<div class = "popUpBackgroundContainer">
+				<div class = "headPop">
+					<span onclick = "document.getElementById('popup5').style.display = 'none'" class = "closeButton" title = "Close">
+						&times;
+					</span>
+					<img src = "ClassImages/warrior.png" style = "height: 40px;width: 40px;position: absolute;left: 37%;top: 8px;">
+					<h1 class = "textPopUpHeader" style = "top: -10px;" id = "centers">Lv.70 Tensusorax</h1>
+				</div>
+				<div class = "bodyPop">
+					<img src = "Images/tensusorax.png" style = "height: 800px; border: 1px solid #3c3c37; position: absolute; left: 10%; top: 30px;">
+				</div>
+				<div class = "lastPop">
+					<h2 class = "textPopUpHeader" id = "centers">Classified Information</h2>
+					<br><br><br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 30%;">-> Tensusorax is another warrior in White Clover, and doesn't like to be inspected.</p>
+					<br><br>
+					<p class = "textPopUpBody" id = "centers" style = "left: 25%;">-> At the moment Tensusorax isn't playing tera because University is keeping his hands full, but he will return soon.</p>
+				</div>
+			</div>
+		</div>
+		-->
+		<div class = "mySlides fade">
+			<img src = "Images/members.png" style = "width: 1880px;height: 917px;"></img>
+		</div>
+	</div>
+	<script src = "membersSlides.js"></script>
+	<script src = "textOnclick.js"></script>
+	<script src = "splashScreen.js"></script>
+	<script src = "returnHome2.js"></script>
+</body>
+</html>
